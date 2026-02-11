@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para você</title>
+    <style>
+        :root {
+            --roxo-jabuticaba: #1a0510;
+            --cor-detalhe: #ff85a1;
+            --brilho: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at center, #2e081d 0%, #0a0206 100%);
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            color: white;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+            animation: fadeIn 1.2s ease-out;
+        }
+
+        .eyes {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .eye {
+            width: clamp(65px, 18vw, 90px);
+            height: clamp(65px, 18vw, 90px);
+            background: radial-gradient(circle at 35% 35%, #4a1033, #000);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        }
+
+        .eye::after {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 20%;
+            width: 25%;
+            height: 25%;
+            background: var(--brilho);
+            border-radius: 50%;
+            filter: blur(0.5px);
+            box-shadow: 0 0 10px white;
+        }
+
+        .message {
+            font-size: clamp(1.3rem, 6vw, 1.8rem);
+            min-height: 120px;
+            padding: 0 15px;
+            transition: all 0.5s ease;
+            line-height: 1.4;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .highlight {
+            color: var(--cor-detalhe);
+            font-weight: bold;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .btn-interativo {
+            margin-top: 30px;
+            padding: 15px 35px;
+            border: 2px solid var(--cor-detalhe);
+            background: transparent;
+            color: var(--cor-detalhe);
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .btn-interativo:active {
+            transform: scale(0.9);
+            background: rgba(255, 133, 161, 0.2);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="eyes">
+            <div class="eye"></div>
+            <div class="eye"></div>
+        </div>
+        
+        <div id="display" class="message">
+            <div>Você tem <span class="highlight">olhos de jabuticaba...</span></div>
+        </div>
+
+        <button class="btn-interativo" onclick="proximaFrase()">Continuar</button>
+    </div>
+
+    <script>
+        let etapa = 0;
+        const display = document.getElementById('display');
+        const btn = document.querySelector('.btn-interativo');
+
+        function proximaFrase() {
+            if (etapa === 0) {
+                display.style.opacity = 0;
+                
+                setTimeout(() => {
+                    display.innerHTML = '<div>E alguém já te disse que você tem um <span class="highlight">belo sorriso?</span></div>';
+                    display.style.opacity = 1;
+                    btn.innerText = "✨";
+                    etapa = 1;
+                }, 400);
+            } else {
+                // Pequeno efeito visual ao clicar no emoji final
+                btn.style.transform = "rotate(20deg)";
+                setTimeout(() => btn.style.transform = "rotate(0deg)", 200);
+            }
+        }
+    </script>
+</body>
+</html>
