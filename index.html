@@ -36,6 +36,7 @@
             animation: fadeIn 1.2s ease-out;
         }
 
+        /* Os Olhos de Jabuticaba */
         .eyes {
             display: flex;
             justify-content: center;
@@ -65,6 +66,7 @@
             box-shadow: 0 0 10px white;
         }
 
+        /* Mensagem Principal */
         .message {
             font-size: clamp(1.3rem, 6vw, 1.8rem);
             min-height: 120px;
@@ -83,6 +85,7 @@
             margin-top: 8px;
         }
 
+        /* Botão Interativo */
         .btn-interativo {
             margin-top: 30px;
             padding: 15px 35px;
@@ -94,6 +97,7 @@
             font-size: 1.1rem;
             font-weight: bold;
             transition: all 0.3s;
+            outline: none;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -110,6 +114,8 @@
 </head>
 <body>
 
+    <audio id="musica" src="musica.mp3" preload="auto"></audio>
+
     <div class="container">
         <div class="eyes">
             <div class="eye"></div>
@@ -124,26 +130,32 @@
     </div>
 
     <script>
-        let etapa = 0;
-        const display = document.getElementById('display');
-        const btn = document.querySelector('.btn-interativo');
+    let etapa = 0;
+    const display = document.getElementById('display');
+    const btn = document.querySelector('.btn-interativo');
+    const audio = document.getElementById('musica');
 
-        function proximaFrase() {
-            if (etapa === 0) {
-                display.style.opacity = 0;
-                
-                setTimeout(() => {
-                    display.innerHTML = '<div>E alguém já te disse que você tem um <span class="highlight">belo sorriso?</span></div>';
-                    display.style.opacity = 1;
-                    btn.innerText = "✨";
-                    etapa = 1;
-                }, 400);
-            } else {
-                // Pequeno efeito visual ao clicar no emoji final
-                btn.style.transform = "rotate(20deg)";
-                setTimeout(() => btn.style.transform = "rotate(0deg)", 200);
-            }
+    function proximaFrase() {
+        // Inicia a música exatamente no refrão (49 segundos)
+        if (etapa === 0) {
+            audio.currentTime = 49; // Pula para a parte do barco e remo
+            audio.play().catch(error => {
+                console.log("Erro ao tocar áudio. Verifique se o arquivo musica.mp3 está no GitHub.");
+            });
+
+            display.style.opacity = 0;
+            
+            setTimeout(() => {
+                display.innerHTML = '<div>E alguém já te disse que você tem um <span class="highlight">belo sorriso?</span></div>';
+                display.style.opacity = 1;
+                btn.innerText = "✨";
+                etapa = 1;
+            }, 400);
+        } else {
+            btn.style.transform = "rotate(20deg)";
+            setTimeout(() => btn.style.transform = "rotate(0deg)", 200);
         }
-    </script>
+    }
+</script>
 </body>
 </html>
